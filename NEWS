@@ -8,6 +8,10 @@ GNU coreutils NEWS                                    -*- outline -*-
   handling ACLs on Cygwin and Solaris platforms. [bug introduced in
   coreutils-8.24]
 
+  cp --parents --no-preserve=mode, no longer copies permissions from source
+  directories, instead using default permissions for created directories.
+  [bug introduced in coreutils-5.93]
+
   chcon, chgrp, chmod, chown, du, and rm, or specifically utilities
   using the FTS interface, now diagnose failures returned by readdir().
   [this bug was inherent in the use of fts: thus, for rm the bug was
@@ -17,6 +21,9 @@ GNU coreutils NEWS                                    -*- outline -*-
   date, du, ls, and pr no longer mishandle time zone abbreviations on
   System V style platforms where this information is available only
   in the global variable 'tzname'. [bug introduced in coreutils-8.24]
+
+  factor again outputs immediately when numbers are input interactively.
+  [bug introduced in coreutils-8.24]
 
   nl now resets numbering for each page section rather than just for each page.
   [This bug was present in "the beginning".]
@@ -55,11 +62,19 @@ GNU coreutils NEWS                                    -*- outline -*-
 
   install -Z now also sets the default SELinux context for created directories.
 
+  ls is now fully responsive to signals until the first escape sequence is
+  written to a terminal.
+
   stat and tail now know about "prl_fs" (a parallels file system),
   "m1fs" (a Plexistor file system), "wslfs" (Windows Subsystem for Linux),
   and "smb2".  stat -f --format=%T now reports the file system type, and
   tail -f uses polling for "prl_fs" and "smb2", inotify for "m1fs",
   and attempts inotify for "wslfs".
+
+** New Features
+
+   date now accepts the --debug option, to annotate the parsed date string,
+   display timezone information, and warn about potential misuse.
 
 
 * Noteworthy changes in release 8.25 (2016-01-20) [stable]
