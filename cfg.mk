@@ -226,6 +226,16 @@ sc_error_shell_always_quotes:
 	       exit 1; }  \
 	  || :
 
+# Usage of error() with an exit constant, should instead use die(),
+# as that avoids warnings and may generate better code, due to being apparent
+# to the compiler that it doesn't return.
+sc_die_EXIT_FAILURE:
+	@cd $(srcdir)/src && GIT_PAGER= git grep -E \
+	    'error \(.*_(FAILURE|INVALID)' \
+	  && { echo '$(ME): '"Use die() instead of error" 1>&2; \
+	       exit 1; }  \
+	  || :
+
 # Avoid unstyled quoting to internal slots and thus destined for diagnostics
 # as that can leak unescaped control characters to the output, when using
 # the default "literal" quoting style.
@@ -794,7 +804,7 @@ exclude_file_name_regexp--sc_bindtextdomain = \
 exclude_file_name_regexp--sc_trailing_blank = \
   ^(tests/pr/|gl/.*\.diff$$|man/help2man)
 exclude_file_name_regexp--sc_system_h_headers = \
-  ^src/((system|copy)\.h|make-prime-list\.c)$$
+  ^src/((die|system|copy)\.h|make-prime-list\.c)$$
 
 _src = (false|lbracket|ls-(dir|ls|vdir)|tac-pipe|uname-(arch|uname))
 exclude_file_name_regexp--sc_require_config_h_first = \

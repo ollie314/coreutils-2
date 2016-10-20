@@ -87,6 +87,7 @@
 #include "acl.h"
 #include "argmatch.h"
 #include "dev-ino.h"
+#include "die.h"
 #include "error.h"
 #include "filenamecat.h"
 #include "hard-locale.h"
@@ -1843,8 +1844,8 @@ decode_switches (int argc, char **argv)
 
         case 'w':
           if (! set_line_length (optarg))
-            error (LS_FAILURE, 0, "%s: %s", _("invalid line width"),
-                   quote (optarg));
+            die (LS_FAILURE, 0, "%s: %s", _("invalid line width"),
+                 quote (optarg));
           break;
 
         case 'x':
@@ -2122,8 +2123,8 @@ decode_switches (int argc, char **argv)
           else
             {
               if (strchr (p1 + 1, '\n'))
-                error (LS_FAILURE, 0, _("invalid time style format %s"),
-                       quote (p0));
+                die (LS_FAILURE, 0, _("invalid time style format %s"),
+                     quote (p0));
               *p1++ = '\0';
             }
           long_time_format[0] = p0;
@@ -3113,6 +3114,7 @@ gobble_file (char const *name, enum filetype type, ino_t inode,
                  directory, and --dereference-command-line-symlink-to-dir is
                  in effect.  Fall through so that we call lstat instead.  */
             }
+          /* fall through */
 
         default: /* DEREF_NEVER */
           err = lstat (absolute_name, &f->stat);
